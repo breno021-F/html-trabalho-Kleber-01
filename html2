@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Usuários</title>
+</head>
+<body>
+  <h1>Lista de Usuários</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Série</th>
+        <th>Celular</th>
+        <th>Endereço</th>
+        <th>Turma</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>CEP</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaUsuarios">
+    </tbody>
+  </table>
+
+  <script>
+    async function carregarUsuarios() {
+      try {
+        const res = await fetch('http://localhost:3000/usuarios');
+        const usuarios = await res.json();
+        const tabela = document.getElementById('tabelaUsuarios');
+        tabela.innerHTML = '';
+
+        usuarios.forEach(user => {
+          tabela.innerHTML += `
+            <tr>
+              <td>${user.nome}</td>
+              <td>${user.email}</td>
+              <td>${user.serie}</td>
+              <td>${user.celular}</td>
+              <td>${user.endereco}</td>
+              <td>${user.turma}</td>
+              <td>${user.cidade}</td>
+              <td>${user.estado}</td>
+              <td>${user.cep}</td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        console.error('Erro ao carregar usuários:', error);
+      }
+    }
+
+    carregarUsuarios();
+  </script>
+</body>
+</html>
